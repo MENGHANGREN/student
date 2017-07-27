@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#text1").change(function(){
+                var s = $("#text1").val();
+                $.post("http://localhost:8080/checkName", {
+                    name : s
+                }, function(data) {
+                    if (data == 0) {
+                        $("#div1").empty();
+                        $("#div1").append(
+                            "<p style='color:#ff3b2f'>数据库存在同名员工,请加入标识</p>");
+                        $("#btn1").prop('disabled', true);
+
+                    } else {
+                        $("#div1").empty();
+                        $("#div1").append(
+                            "<p style='color:#11f037'>此名字可用</p>");
+                        $("#btn1").prop('disabled', false);
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body style="padding: 100px;" bgcolor="#F8F8FF">
+<h1 align="center">添加员工</h1>
+
+<form class="form-horizontal" action="#" th:action="@{/insertEmployee}" method="post">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">员工姓名</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="text1" name="name">
+        </div>
+    </div>
+    <div id="div1"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">入职日期</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" name="start_string">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">员工信息</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="info">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">员工部门</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="deptname">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input id="btn1" type="submit" class="btn btn-default" value="添加">
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bawei.mapper.EmployeeMapper">
+	<select id="findTree" resultType="tree">
+		select * from tree
+	</select>
+	<insert id="insertEmployee" parameterType="employee">
+		insert into employee (name,start,info,deptname) values (#{name},#{start},#{info},#{deptname})
+	</insert>
+	
+	<select id="checkName" parameterType="String" resultType="employee">
+		select * from employee where name = #{name}
+	</select>
+	
+	<select id="findEmployeeList" parameterType="employee" resultType="employee">
+		select * from employee where 1=1  
+		
+			<if test="name != null">
+				<if test="name != ''">
+				and name = #{name} 
+				</if>
+			</if>
+			<if test="start != null">
+			   and start &gt; #{start}
+			</if>
+			<if test="end != null">
+				and #{end} &gt; end
+			</if>
+		
+	</select>
+</mapper>
